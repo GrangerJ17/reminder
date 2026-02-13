@@ -10,8 +10,10 @@ from pprint import pprint
 from datetime import datetime
 load_dotenv()
 
-conn = psycopg2.connect(host="localhost", dbname=os.environ["CANVASDB"], user=os.environ["PGUSER"],
+conn = psycopg2.connect(host=os.environ["HOST_TO_DB"], dbname=os.environ["CANVASDB"], user=os.environ["PGUSER"],
                         password=os.environ["PGPASSWORD"], port=os.environ["SYSPGPORT"])
+
+path_to_classes=os.path.abspath("../relevant_courses.json")
 
 new_tasks_released = []   
 
@@ -180,7 +182,7 @@ def load_relevant_courses(access_token: str) -> list[dict]:
      '''
 
      course_json = {}
-     with open("./relevant_courses.json", "r") as file:
+     with open(path_to_classes, "r") as file:
         course_json = json.load(file)
 
      module_info = []
