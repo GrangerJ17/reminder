@@ -2,7 +2,8 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY . /app
+COPY * /app
+COPY relevant_courses.json /app/relevant_courses.json
 
 # RUN apt-get update && \
   #  apt-get install -y --no-install-recommends \

@@ -13,7 +13,7 @@ load_dotenv()
 conn = psycopg2.connect(host=os.environ["HOST_TO_DB"], dbname=os.environ["CANVASDB"], user=os.environ["PGUSER"],
                         password=os.environ["PGPASSWORD"], port=os.environ["SYSPGPORT"])
 
-path_to_classes=os.path.abspath("../relevant_courses.json")
+path_to_classes="relevant_courses.json"
 
 new_tasks_released = []   
 
@@ -223,7 +223,6 @@ def new_assignment_post(new_tasks):
         endpoint = os.environ["DISCORD_CANVAS_WEBHOOK"]
         req = requests.post(endpoint, json = msg_obj)
 
-        break
 
     
 
