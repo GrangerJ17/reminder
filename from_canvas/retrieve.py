@@ -214,7 +214,7 @@ def new_assignment_post(new_tasks):
     for task in new_tasks:
         msg_obj = {
     "content": (
-        f"**New task released from {task['course_code'].replace('_', ' ')}:**\n"
+        f"**@.sufa New task released from {task['course_code'].replace('_', ' ')}:**\n"
         f"- **Title**: {task['title'].title()}\n"
         f"- **Due at**: {task['due_date']}\n"
         f"- **Unlocks at**: {task['unlock_at']}"
