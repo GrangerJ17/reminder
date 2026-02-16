@@ -210,6 +210,7 @@ def load_relevant_courses(access_token: str) -> list[dict]:
      return relevant_data                                                  
         
 def new_assignment_post(new_tasks):
+    print(new_tasks)
     for task in new_tasks:
         msg_obj = {
     "content": (
