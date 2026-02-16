@@ -3,17 +3,29 @@ pipeline {
 
     stages {
         stage('Build') {
-            steps {
-                sh '''
-                docker build -t check-canvas ./from_canvas
-                docker run \
-                 --network psql-connecy \
-                 --env-file from_canvas/.env \
-                 -v $(pwd)/from_canvas/.env:/app/.env \
-                check-canvas
-
-                '''
+            withCredentials([
+                    string(credentialsId: 'PGPASSWORD', variable: 'PGPASSWORD'),
+                    string(credentialsId: 'CANVASDB', variable: 'CANVASDB'),
+                    string(credentialsId: 'DISCORD_WEBHOOK_URL', variable: 'DISCORD_WEBHOOK_URL'),
+                    string(credentialsId: 'PGUSER', variable: 'PGUSER'),
+                    string(credentialsId: 'SYSPGPORT', variable: 'SYSPGPORT'),
+                    string(credentialsId: 'HOST_TO_DB', variable: 'HOST_TO_DB'),
+                    string(credentialsId: 'CANVAS_TOKEN', variable: 'CANVAS_TOKEN')
+            ]) {
+                    sh '''
+                    docker run \
+                    --network psql-connecy \
+                    -e PGPASSWORD \
+                    -e CANVASDB \
+                    -e DISCORD_WEBHOOK_URL \
+                    -e PGUSER \
+                    -e SYSPGPORT \
+                    -e HOST_TO_DB \
+                    -e CANVAS_TOKEN \
+                    check-canvas
+                        '''
             }
+
         }
     }
 }
