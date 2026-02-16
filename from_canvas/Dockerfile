@@ -4,7 +4,6 @@ WORKDIR /app
 
 COPY * /app/
 COPY relevant_courses.json /app/relevant_courses.json
-COPY .env /app/.env
 
 # RUN apt-get update && \
   #  apt-get install -y --no-install-recommends \
