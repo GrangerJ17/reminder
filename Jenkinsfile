@@ -3,6 +3,7 @@ pipeline {
 
     stages {
         stage('Build') {
+            step {
             withCredentials([
                     string(credentialsId: 'PGPASSWORD', variable: 'PGPASSWORD'),
                     string(credentialsId: 'CANVASDB', variable: 'CANVASDB'),
@@ -24,8 +25,8 @@ pipeline {
                     -e CANVAS_TOKEN \
                     check-canvas
                         '''
-            }
-
+                }
+           }
         }
     }
 }
