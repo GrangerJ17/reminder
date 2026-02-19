@@ -16,6 +16,8 @@ load_dotenv()
 
 app = FastAPI()
 
+
+
 conn = psycopg2.connect(host=os.environ["HOST_TO_DB"], dbname=os.environ["CANVASDB"], user=os.environ["PGUSER"],
                         password=os.environ["PGPASSWORD"], port=os.environ["SYSPGPORT"])
 
