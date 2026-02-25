@@ -107,10 +107,10 @@ def get_course_tasks(access_token: str):
                              "course_code": course['course_id'],
                              "title": assignment["name"],
                             "due_date": (
-                                datetime.fromisoformat(assignment["due_date"]).replace(tzinfo=None).isoformat()
-                                 if assignment.get("due_date") else None
+                                datetime.fromisoformat(assignment["due_at"]).replace(tzinfo=None).isoformat()
+                                 if assignment.get("due_at") else None
                                     ),
-                            "unlock_at": (
+                                                         "unlock_at": (
                                 datetime.fromisoformat(assignment["unlock_at"]).replace(tzinfo=None).isoformat()
                                  if assignment.get("unlock_at") else None
                                     ),
@@ -127,6 +127,8 @@ def get_course_tasks(access_token: str):
                              "external_uuid": unique_id}
 
                 assignments.append(new_entry)
+
+            print("\n\nAssignments: ", assignments)
 
         for assignment in assignments:
             cur.execute("SELECT * FROM course_assignments WHERE external_uuid = %s", (str(assignment['external_uuid']),))

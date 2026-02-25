@@ -8,7 +8,6 @@ async function loadAssignments() {
     Object.entries(data).forEach(([title, info]) => {
         const div = document.createElement("div");
         div.className = "assignment";
-
         div.innerHTML = `
             <div class="title">${title}</div>
             <div class="meta">

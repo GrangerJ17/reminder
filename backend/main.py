@@ -40,7 +40,8 @@ def get_tasks():
         cur.execute("SELECT * FROM course_assignments",)
         tasks = cur.fetchall()
 
-        #TODO: Make task retrieval and selection more refinded
+
+        #TODO: Make task retrieval and selection more refinded eg past due dates/completed
         response = {}
         start_of_year = date(date.today().year, 1, 1)
         for task in tasks:
@@ -53,9 +54,10 @@ def get_tasks():
                 task = dict(task)
                 if task_date > start_of_year:
                     response[task["title"]] = {
-                            "due_date": task["due_date"],
+                            "due_date": task["due_date"] if task["due_date"] is None else task['due_date'].strftime("%A, %d %B %Y") ,
                             "course_code": task["course_code"]
                             }
+
         print(response)
         return response
 
