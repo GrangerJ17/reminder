@@ -15,17 +15,22 @@
                     string(credentialsId: 'CANVAS_TOKEN', variable: 'CANVAS_TOKEN')
                 ]) {
                     sh '''
-  docker run \
-    --network psql-connecy \
-    -e PGPASSWORD="$PGPASSWORD" \
-    -e CANVASDB="$CANVASDB" \
-    -e DISCORD_CANVAS_WEBHOOK="$DISCORD_CANVAS_WEBHOOK" \
-    -e PGUSER="$PGUSER" \
-    -e SYSPGPORT="$SYSPGPORT" \
-    -e HOST_TO_DB="$HOST_TO_DB" \
-    -e CANVAS_TOKEN="$CANVAS_TOKEN" \
-    check-canvas
-'''
+                    docker build -t check-canvas .
+                    '''
+                    sh '''
+                    docker run -t --rm \
+                    --network psql-connecy \
+                    -e PGPASSWORD="$PGPASSWORD" \
+                    -e CANVASDB="$CANVASDB" \
+                    -e DISCORD_CANVAS_WEBHOOK="$DISCORD_CANVAS_WEBHOOK" \
+                    -e PGUSER="$PGUSER" \
+                    -e SYSPGPORT="$SYSPGPORT" \
+                    -e HOST_TO_DB="$HOST_TO_DB" \
+                    -e CANVAS_TOKEN="$CANVAS_TOKEN" \
+                    check-canvas
+                    '''
+
+                    sh '''docker rmi canvas-image'''
                 }
             }
         }
