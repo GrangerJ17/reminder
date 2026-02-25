@@ -15,7 +15,7 @@
                     string(credentialsId: 'CANVAS_TOKEN', variable: 'CANVAS_TOKEN')
                 ]) {
                     sh '''
-                    docker build -t check-canvas .
+                    docker build -t check-canvas ./from_canvas/
                     '''
                     sh '''
                     docker run -t --rm \
