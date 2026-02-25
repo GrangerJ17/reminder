@@ -8,6 +8,8 @@ import psycopg2
 import psycopg2.extras
 from pprint import pprint 
 from datetime import datetime
+import sys
+
 load_dotenv()
 
 conn = psycopg2.connect(host=os.environ["HOST_TO_DB"], dbname=os.environ["CANVASDB"], user=os.environ["PGUSER"],
@@ -23,7 +25,13 @@ def load_access_token():
 
 access_token = load_access_token()
 
-
+def log_payload(tag, payload):
+    print(
+        f"[{datetime.utcnow().isoformat()}] {tag}: "
+        + json.dumps(payload, default=str),
+        file=sys.stdout,
+        flush=True
+    )
 
 def load_all_courses(access_token: str) -> list[dict]:
 
@@ -128,7 +136,6 @@ def get_course_tasks(access_token: str):
 
                 assignments.append(new_entry)
 
-            print("\n\nAssignments: ", assignments)
 
         for assignment in assignments:
             cur.execute("SELECT * FROM course_assignments WHERE external_uuid = %s", (str(assignment['external_uuid']),))
@@ -138,6 +145,7 @@ def get_course_tasks(access_token: str):
                 new_tasks_released.append(assignment)
                 
 
+            log_payload("DB_WRITE_PAYLOAD", assignment['due_date'])
 
             query = """INSERT INTO course_assignments (course_code, course_id, title, due_date,
                                                     unlock_at, lock_at, submission_type,
