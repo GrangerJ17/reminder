@@ -57,9 +57,9 @@ def get_tasks():
                             "due_date": task["due_date"] if task["due_date"] is None else task['due_date'].strftime("%A, %d %B %Y") ,
                             "course_code": task["course_code"]
                             }
-
-        print(response)
-        return response
+        sorted_response = sorted(response.items(), key=lambda item: datetime.strptime(item[1]["due_date"], "%A, %d %B %Y"))
+        # print(sorted_response)
+        return dict(sorted_response)
 
 def main():
     uvicorn.run(
