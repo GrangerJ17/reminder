@@ -1,0 +1,34 @@
+ pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'PGPASSWORD', variable: 'PGPASSWORD'),
+                    string(credentialsId: 'CANVASDB', variable: 'CANVASDB'),
+                    string(credentialsId: 'DISCORD_CANVAS_WEBHOOK', variable: 'DISCORD_CANVAS_WEBHOOK'),
+
+                    string(credentialsId: 'PGUSER', variable: 'PGUSER'),
+                    string(credentialsId: 'SYSPGPORT', variable: 'SYSPGPORT'),
+                    string(credentialsId: 'HOST_TO_DB', variable: 'HOST_TO_DB'),
+                    string(credentialsId: 'CANVAS_TOKEN', variable: 'CANVAS_TOKEN')
+                ]) {
+
+                    sh '''docker build canvas-alert ./alerts/''' 
+                    sh '''
+                    docker run -t --rm \
+                    --network psql-connecy \
+                    -e PGPASSWORD="$PGPASSWORD" \
+                    -e CANVASDB="$CANVASDB" \
+                    -e DISCORD_CANVAS_WEBHOOK="$DISCORD_CANVAS_WEBHOOK" \
+                    -e PGUSER="$PGUSER" \
+                    -e SYSPGPORT="$SYSPGPORT" \
+                    -e HOST_TO_DB="$HOST_TO_DB" \
+                    -e CANVAS_TOKEN="$CANVAS_TOKEN" \
+                    canvas-alert
+
+                    '''
+                    sh '''docker rmi canvas-alert'''
+
+}
