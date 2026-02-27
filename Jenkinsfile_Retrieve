@@ -30,7 +30,7 @@
                     check-canvas
                     '''
 
-                    sh '''docker rmi canvas-image'''
+                    sh '''docker rmi check_canvas'''
                 }
             }
         }
