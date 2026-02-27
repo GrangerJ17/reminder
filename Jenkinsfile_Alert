@@ -1,4 +1,4 @@
-pipeline {
+  pipeline {
     agent any
 
     stages {
@@ -19,8 +19,8 @@ pipeline {
                         docker run -t --rm \
                         --network psql-connecy \
                         -e PGPASSWORD="$PGPASSWORD" \
-                        -e CANVASDB="$CANVASDB" \         
-                        -e DISCORD_REMINDERS_WEBHOOK="$DISCORD_REMINDERS_WEBHOOK" \
+                        -e CANVASDB="$CANVASDB" \
+                         -e DISCORD_REMINDERS_WEBHOOK="$DISCORD_REMINDERS_WEBHOOK" \
                         -e PGUSER="$PGUSER" \
                         -e SYSPGPORT="$SYSPGPORT" \
                         -e HOST_TO_DB="$HOST_TO_DB" \
